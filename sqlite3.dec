@@ -1,0 +1,711 @@
+' ------------ XLONG by default. MakeDEF did not find details of these types.
+TYPE sqlite3	= XLONG
+TYPE sqlite3_int64	= XLONG
+TYPE sqlite3_syscall_ptr	= XLONG
+TYPE va_list	= XLONG
+TYPE voidxTrace	= XLONG
+TYPE voidxProfile	= XLONG
+TYPE sqlite3_stmt	= XLONG
+TYPE sqlite3_value	= XLONG
+TYPE sqlite3_context	= XLONG
+TYPE intxCompare	= XLONG
+TYPE voidxDestroy	= XLONG
+TYPE sqlite3_blob	= XLONG
+TYPE sqlite3_mutex	= XLONG
+TYPE sqlite3_pcache	= XLONG
+TYPE sqlite3_backup	= XLONG
+TYPE sqlite3_rtree_geometry	= XLONG
+' ------------ End XLONG by default.
+
+TYPE int	= XLONG
+TYPE double	= DOUBLE
+TYPE char	= UBYTE
+TYPE unsigned	= ULONG
+TYPE lpsqlite3	= XLONG
+TYPE lpsqlite3_io_methods	= XLONG
+TYPE lpsqlite3_file	= XLONG
+TYPE lpsqlite3_int64	= XLONG
+TYPE lpsqlite3_vfs	= XLONG
+TYPE lpsqlite3_syscall_ptr	= XLONG
+TYPE lpvoidxTrace	= XLONG
+TYPE lpvoidxProfile	= XLONG
+TYPE lpsqlite3_stmt	= XLONG
+TYPE lpsqlite3_value	= XLONG
+TYPE lpsqlite3_context	= XLONG
+TYPE lpintxCompare	= XLONG
+TYPE lpsqlite3_vtab	= XLONG
+TYPE lpsqlite3_index_info	= XLONG
+TYPE lpsqlite3_vtab_cursor	= XLONG
+TYPE lpsqlite3_module	= XLONG
+TYPE lpvoidxDestroy	= XLONG
+TYPE lpsqlite3_blob	= XLONG
+TYPE lpsqlite3_mutex	= XLONG
+TYPE lpsqlite3_pcache	= XLONG
+TYPE lpsqlite3_pcache_page	= XLONG
+TYPE lpsqlite3_backup	= XLONG
+
+TYPE sqlite3_file
+  lpsqlite3_io_methods .pMethods
+END TYPE
+
+TYPE sqlite3_io_methods
+  int .iVersion
+  FUNCADDR .xClose (lpsqlite3_file)
+  FUNCADDR .xRead (lpsqlite3_file, XLONG, int, sqlite3_int64)
+  FUNCADDR .xWrite (lpsqlite3_file, XLONG, int, sqlite3_int64)
+  FUNCADDR .xTruncate (lpsqlite3_file, sqlite3_int64)
+  FUNCADDR .xSync (lpsqlite3_file, int)
+  FUNCADDR .xFileSize (lpsqlite3_file, lpsqlite3_int64)
+  FUNCADDR .xLock (lpsqlite3_file, int)
+  FUNCADDR .xUnlock (lpsqlite3_file, int)
+  FUNCADDR .xCheckReservedLock (lpsqlite3_file, XLONG)
+  FUNCADDR .xFileControl (lpsqlite3_file, int, XLONG)
+  FUNCADDR .xSectorSize (lpsqlite3_file)
+  FUNCADDR .xDeviceCharacteristics (lpsqlite3_file)
+  FUNCADDR .xShmMap (lpsqlite3_file, int, int, int, XLONG)
+  FUNCADDR .xShmLock (lpsqlite3_file, int, int, int)
+  FUNCADDR .xShmBarrier (lpsqlite3_file)
+  FUNCADDR .xShmUnmap (lpsqlite3_file, int)
+  FUNCADDR .xFetch (lpsqlite3_file, sqlite3_int64, int, XLONG)
+  FUNCADDR .xUnfetch (lpsqlite3_file, sqlite3_int64, XLONG)
+END TYPE
+
+TYPE sqlite3_vfs
+  int .iVersion
+  int .szOsFile
+  int .mxPathname
+  lpsqlite3_vfs .pNext
+  XLONG .zName
+  XLONG .pAppData
+  XLONG .xOpen
+  FUNCADDR .xDelete (lpsqlite3_vfs, XLONG, int)
+  FUNCADDR .xAccess (lpsqlite3_vfs, XLONG, int, XLONG)
+  FUNCADDR .xFullPathname (lpsqlite3_vfs, XLONG, int, XLONG)
+  FUNCADDR .xDlOpen (lpsqlite3_vfs, XLONG)
+  FUNCADDR .xDlError (lpsqlite3_vfs, int, XLONG)
+END TYPE
+
+TYPE 
+  FUNCADDR .xDlClose (lpsqlite3_vfs, XLONG)
+  FUNCADDR .xRandomness (lpsqlite3_vfs, int, XLONG)
+  FUNCADDR .xSleep (lpsqlite3_vfs, int)
+  FUNCADDR .xCurrentTime (lpsqlite3_vfs, XLONG)
+  FUNCADDR .xGetLastError (lpsqlite3_vfs, int, XLONG)
+  FUNCADDR .xCurrentTimeInt64 (lpsqlite3_vfs, lpsqlite3_int64)
+  FUNCADDR .xSetSystemCall (lpsqlite3_vfs, XLONG, sqlite3_syscall_ptr)
+  FUNCADDR .xGetSystemCall (lpsqlite3_vfs, XLONG)
+  FUNCADDR .xNextSystemCall (lpsqlite3_vfs, XLONG)
+END TYPE
+
+TYPE sqlite3_mem_methods
+  FUNCADDR .xMalloc (int)
+  FUNCADDR .xFree (XLONG)
+  FUNCADDR .xRealloc (XLONG, int)
+  FUNCADDR .xSize (XLONG)
+  FUNCADDR .xRoundup (int)
+  FUNCADDR .xInit (XLONG)
+  FUNCADDR .xShutdown (XLONG)
+  XLONG .pAppData
+END TYPE
+
+TYPE sqlite3_module
+  int .iVersion
+  XLONG .xCreate
+  XLONG .xConnect
+  FUNCADDR .xBestIndex (lpsqlite3_vtab, lpsqlite3_index_info)
+  FUNCADDR .xDisconnect (lpsqlite3_vtab)
+  FUNCADDR .xDestroy (lpsqlite3_vtab)
+  FUNCADDR .xOpen (lpsqlite3_vtab, lpsqlite3_vtab_cursor)
+  FUNCADDR .xClose (lpsqlite3_vtab_cursor)
+  XLONG .xFilter
+  FUNCADDR .xNext (lpsqlite3_vtab_cursor)
+  FUNCADDR .xEof (lpsqlite3_vtab_cursor)
+  FUNCADDR .xColumn (lpsqlite3_vtab_cursor, lpsqlite3_context, int)
+  FUNCADDR .xRowid (lpsqlite3_vtab_cursor, lpsqlite3_int64)
+  FUNCADDR .xUpdate (lpsqlite3_vtab, int, lpsqlite3_value, lpsqlite3_int64)
+  FUNCADDR .xBegin (lpsqlite3_vtab)
+  FUNCADDR .xSync (lpsqlite3_vtab)
+  FUNCADDR .xCommit (lpsqlite3_vtab)
+  FUNCADDR .xRollback (lpsqlite3_vtab)
+  XLONG .xFindFunction
+  FUNCADDR .xRename (lpsqlite3_vtab, XLONG)
+  FUNCADDR .xSavepoint (lpsqlite3_vtab, int)
+  FUNCADDR .xRelease (lpsqlite3_vtab, int)
+  FUNCADDR .xRollbackTo (lpsqlite3_vtab, int)
+END TYPE
+
+TYPE sqlite3_index_info
+  int .nConstraint
+END TYPE
+
+TYPE aConstraint
+  int .iColumn
+  unsigned .op
+  unsigned .usable
+  int .iTermOffset
+END TYPE
+
+TYPE sqlite3_index_constraint
+END TYPE
+
+TYPE aOrderBy
+  int .iColumn
+  unsigned .desc
+END TYPE
+
+TYPE sqlite3_index_orderby
+END TYPE
+
+TYPE aConstraintUsage
+  int .argvIndex
+  unsigned .omit
+END TYPE
+
+TYPE sqlite3_index_constraint_usage
+END TYPE
+
+TYPE sqlite3_vtab
+  lpsqlite3_module .pModule
+  int .nRef
+  XLONG .zErrMsg
+END TYPE
+
+TYPE sqlite3_vtab_cursor
+  lpsqlite3_vtab .pVtab
+END TYPE
+
+TYPE sqlite3_mutex_methods
+  FUNCADDR .xMutexInit (int)
+  FUNCADDR .xMutexEnd (int)
+  FUNCADDR .xMutexAlloc (int)
+  FUNCADDR .xMutexFree (lpsqlite3_mutex)
+  FUNCADDR .xMutexEnter (lpsqlite3_mutex)
+  FUNCADDR .xMutexTry (lpsqlite3_mutex)
+  FUNCADDR .xMutexLeave (lpsqlite3_mutex)
+  FUNCADDR .xMutexHeld (lpsqlite3_mutex)
+  FUNCADDR .xMutexNotheld (lpsqlite3_mutex)
+END TYPE
+
+TYPE sqlite3_pcache_page
+  XLONG .pBuf
+  XLONG .pExtra
+END TYPE
+
+TYPE sqlite3_pcache_methods2
+  int .iVersion
+  XLONG .pArg
+  FUNCADDR .xInit (XLONG)
+  FUNCADDR .xShutdown (XLONG)
+  FUNCADDR .xCreate (int, int, int)
+  FUNCADDR .xCachesize (lpsqlite3_pcache, int)
+  FUNCADDR .xPagecount (lpsqlite3_pcache)
+  FUNCADDR .xFetch (lpsqlite3_pcache, unsigned, int)
+  FUNCADDR .xUnpin (lpsqlite3_pcache, lpsqlite3_pcache_page, int)
+  XLONG .xRekey
+  FUNCADDR .xTruncate (lpsqlite3_pcache, unsigned)
+  FUNCADDR .xDestroy (lpsqlite3_pcache)
+  FUNCADDR .xShrink (lpsqlite3_pcache)
+END TYPE
+
+TYPE sqlite3_pcache_methods
+  XLONG .pArg
+  FUNCADDR .xInit (XLONG)
+  FUNCADDR .xShutdown (XLONG)
+  FUNCADDR .xCreate (int, int)
+  FUNCADDR .xCachesize (lpsqlite3_pcache, int)
+  FUNCADDR .xPagecount (lpsqlite3_pcache)
+  FUNCADDR .xFetch (lpsqlite3_pcache, unsigned, int)
+  FUNCADDR .xUnpin (lpsqlite3_pcache, XLONG, int)
+  FUNCADDR .xRekey (lpsqlite3_pcache, XLONG, unsigned, unsigned)
+  FUNCADDR .xTruncate (lpsqlite3_pcache, unsigned)
+  FUNCADDR .xDestroy (lpsqlite3_pcache)
+END TYPE
+
+
+EXTERNAL CFUNCTION XLONG sqlite3_aggregate_context (lpsqlite3_context _value, int nBytes)
+EXTERNAL CFUNCTION int sqlite3_aggregate_count (lpsqlite3_context _value)
+EXTERNAL CFUNCTION int sqlite3_auto_extension (XLONG xEntryPoint)
+EXTERNAL CFUNCTION int sqlite3_backup_finish (lpsqlite3_backup p)
+EXTERNAL CFUNCTION lpsqlite3_backup sqlite3_backup_init (lpsqlite3 pDest, XLONG zDestName, lpsqlite3 pSource, XLONG zSourceName)
+EXTERNAL CFUNCTION int sqlite3_backup_pagecount (lpsqlite3_backup p)
+EXTERNAL CFUNCTION int sqlite3_backup_remaining (lpsqlite3_backup p)
+EXTERNAL CFUNCTION int sqlite3_backup_step (lpsqlite3_backup p, int nPage)
+EXTERNAL CFUNCTION int sqlite3_bind_blob (lpsqlite3_stmt _value, int _value, XLONG _value, int n, XLONG n)
+EXTERNAL CFUNCTION sqlite3_bind_blob64 ()
+EXTERNAL CFUNCTION int sqlite3_bind_double (lpsqlite3_stmt _value, int _value, double _value)
+EXTERNAL CFUNCTION int sqlite3_bind_int (lpsqlite3_stmt _value, int _value, int _value)
+EXTERNAL CFUNCTION int sqlite3_bind_int64 (lpsqlite3_stmt _value, int _value, sqlite3_int64 _value)
+EXTERNAL CFUNCTION int sqlite3_bind_null (lpsqlite3_stmt _value, int _value)
+EXTERNAL CFUNCTION int sqlite3_bind_parameter_count (lpsqlite3_stmt _value)
+EXTERNAL CFUNCTION int sqlite3_bind_parameter_index (lpsqlite3_stmt _value, XLONG zName)
+EXTERNAL CFUNCTION XLONG sqlite3_bind_parameter_name (lpsqlite3_stmt _value, int _value)
+EXTERNAL CFUNCTION int sqlite3_bind_text (lpsqlite3_stmt _value, int _value, XLONG _value, int n, XLONG n)
+EXTERNAL CFUNCTION int sqlite3_bind_text16 (lpsqlite3_stmt _value, int _value, XLONG _value, int _value, XLONG _value)
+EXTERNAL CFUNCTION sqlite3_bind_text64 ()
+EXTERNAL CFUNCTION int sqlite3_bind_value (lpsqlite3_stmt _value, int _value, lpsqlite3_value _value)
+EXTERNAL CFUNCTION int sqlite3_bind_zeroblob (lpsqlite3_stmt _value, int _value, int n)
+EXTERNAL CFUNCTION sqlite3_bind_zeroblob64 ()
+EXTERNAL CFUNCTION int sqlite3_blob_bytes (lpsqlite3_blob _value)
+EXTERNAL CFUNCTION int sqlite3_blob_close (lpsqlite3_blob _value)
+EXTERNAL CFUNCTION int sqlite3_blob_open (lpsqlite3 _value, XLONG zDb, XLONG zTable, XLONG zColumn, sqlite3_int64 iRow, int flags, lpsqlite3_blob ppBlob)
+EXTERNAL CFUNCTION int sqlite3_blob_read (lpsqlite3_blob _value, XLONG Z, int N, int iOffset)
+EXTERNAL CFUNCTION int sqlite3_blob_reopen (lpsqlite3_blob _value, sqlite3_int64 _value)
+EXTERNAL CFUNCTION int sqlite3_blob_write (lpsqlite3_blob _value, XLONG z, int n, int iOffset)
+EXTERNAL CFUNCTION int sqlite3_busy_handler (lpsqlite3 _value, XLONG _value)
+EXTERNAL CFUNCTION int sqlite3_busy_timeout (lpsqlite3 _value, int ms)
+EXTERNAL CFUNCTION int sqlite3_cancel_auto_extension (XLONG xEntryPoint)
+EXTERNAL CFUNCTION int sqlite3_changes (lpsqlite3 _value)
+EXTERNAL CFUNCTION int sqlite3_clear_bindings (lpsqlite3_stmt _value)
+EXTERNAL CFUNCTION int sqlite3_close (lpsqlite3)
+EXTERNAL CFUNCTION int sqlite3_close_v2 (lpsqlite3)
+EXTERNAL CFUNCTION int sqlite3_collation_needed (lpsqlite3 _value, XLONG _value, XLONG _value)
+EXTERNAL CFUNCTION int sqlite3_collation_needed16 (lpsqlite3 _value, XLONG _value, XLONG _value)
+EXTERNAL CFUNCTION XLONG sqlite3_column_blob (lpsqlite3_stmt _value, int iCol)
+EXTERNAL CFUNCTION int sqlite3_column_bytes (lpsqlite3_stmt _value, int iCol)
+EXTERNAL CFUNCTION int sqlite3_column_bytes16 (lpsqlite3_stmt _value, int iCol)
+EXTERNAL CFUNCTION int sqlite3_column_count (lpsqlite3_stmt pStmt)
+EXTERNAL CFUNCTION XLONG sqlite3_column_database_name (lpsqlite3_stmt _value, int _value)
+EXTERNAL CFUNCTION XLONG sqlite3_column_database_name16 (lpsqlite3_stmt _value, int _value)
+EXTERNAL CFUNCTION XLONG sqlite3_column_decltype (lpsqlite3_stmt _value, int _value)
+EXTERNAL CFUNCTION XLONG sqlite3_column_decltype16 (lpsqlite3_stmt _value, int _value)
+EXTERNAL CFUNCTION double sqlite3_column_double (lpsqlite3_stmt _value, int iCol)
+EXTERNAL CFUNCTION int sqlite3_column_int (lpsqlite3_stmt _value, int iCol)
+EXTERNAL CFUNCTION sqlite3_int64 sqlite3_column_int64 (lpsqlite3_stmt _value, int iCol)
+EXTERNAL CFUNCTION XLONG sqlite3_column_name (lpsqlite3_stmt _value, int N)
+EXTERNAL CFUNCTION XLONG sqlite3_column_name16 (lpsqlite3_stmt _value, int N)
+EXTERNAL CFUNCTION XLONG sqlite3_column_origin_name (lpsqlite3_stmt _value, int _value)
+EXTERNAL CFUNCTION XLONG sqlite3_column_origin_name16 (lpsqlite3_stmt _value, int _value)
+EXTERNAL CFUNCTION XLONG sqlite3_column_table_name (lpsqlite3_stmt _value, int _value)
+EXTERNAL CFUNCTION XLONG sqlite3_column_table_name16 (lpsqlite3_stmt _value, int _value)
+EXTERNAL CFUNCTION unsigned sqlite3_column_text (lpsqlite3_stmt _value, int iCol)
+EXTERNAL CFUNCTION XLONG sqlite3_column_text16 (lpsqlite3_stmt _value, int iCol)
+EXTERNAL CFUNCTION int sqlite3_column_type (lpsqlite3_stmt _value, int iCol)
+EXTERNAL CFUNCTION lpsqlite3_value sqlite3_column_value (lpsqlite3_stmt _value, int iCol)
+EXTERNAL CFUNCTION XLONG sqlite3_commit_hook (lpsqlite3 _value, XLONG _value)
+EXTERNAL CFUNCTION XLONG sqlite3_compileoption_get (int N)
+EXTERNAL CFUNCTION int sqlite3_compileoption_used (XLONG zOptName)
+EXTERNAL CFUNCTION int sqlite3_complete (XLONG sql)
+EXTERNAL CFUNCTION int sqlite3_complete16 (XLONG sql)
+EXTERNAL CFUNCTION int sqlite3_config (int _value, XLONG value)
+EXTERNAL CFUNCTION lpsqlite3 sqlite3_context_db_handle (lpsqlite3_context _value)
+EXTERNAL CFUNCTION int sqlite3_create_collation (lpsqlite3 _value, XLONG zName, int eTextRep, XLONG pArg, lpintxCompare pArg)
+EXTERNAL CFUNCTION int sqlite3_create_collation16 (lpsqlite3 _value, XLONG zName, int eTextRep, XLONG pArg, lpintxCompare pArg)
+EXTERNAL CFUNCTION int sqlite3_create_collation_v2 (lpsqlite3 _value, XLONG zName, int eTextRep, XLONG pArg, lpintxCompare pArg)
+EXTERNAL CFUNCTION int sqlite3_create_function (lpsqlite3 db, XLONG zFunctionName, int nArg, int eTextRep, XLONG pApp, XLONG xFunc)
+EXTERNAL CFUNCTION int sqlite3_create_function16 (lpsqlite3 db, XLONG zFunctionName, int nArg, int eTextRep, XLONG pApp, XLONG xFunc)
+EXTERNAL CFUNCTION int sqlite3_create_function_v2 (lpsqlite3 db, XLONG zFunctionName, int nArg, int eTextRep, XLONG pApp, XLONG xFunc)
+EXTERNAL CFUNCTION int sqlite3_create_module (lpsqlite3 db, XLONG zName, lpsqlite3_module p, XLONG pClientData)
+EXTERNAL CFUNCTION int sqlite3_create_module_v2 (lpsqlite3 db, XLONG zName, lpsqlite3_module p, XLONG pClientData, lpvoidxDestroy pClientData)
+EXTERNAL CFUNCTION int sqlite3_data_count (lpsqlite3_stmt pStmt)
+EXTERNAL CFUNCTION sqlite3_data_directory ()
+EXTERNAL CFUNCTION sqlite3_db_cacheflush ()
+EXTERNAL CFUNCTION int sqlite3_db_config (lpsqlite3 _value, int op, XLONG value)
+EXTERNAL CFUNCTION XLONG sqlite3_db_filename (lpsqlite3 db, XLONG zDbName)
+EXTERNAL CFUNCTION lpsqlite3 sqlite3_db_handle (lpsqlite3_stmt _value)
+EXTERNAL CFUNCTION lpsqlite3_mutex sqlite3_db_mutex (lpsqlite3 _value)
+EXTERNAL CFUNCTION int sqlite3_db_readonly (lpsqlite3 db, XLONG zDbName)
+EXTERNAL CFUNCTION int sqlite3_db_release_memory (lpsqlite3 _value)
+EXTERNAL CFUNCTION int sqlite3_db_status (lpsqlite3 _value, int op, XLONG pCur, XLONG pHiwtr, int resetFlg)
+EXTERNAL CFUNCTION int sqlite3_declare_vtab (lpsqlite3 _value, XLONG zSQL)
+EXTERNAL CFUNCTION int sqlite3_enable_load_extension (lpsqlite3 db, int onoff)
+EXTERNAL CFUNCTION int sqlite3_enable_shared_cache (int _value)
+EXTERNAL CFUNCTION int sqlite3_errcode (lpsqlite3 db)
+EXTERNAL CFUNCTION XLONG sqlite3_errmsg (lpsqlite3 _value)
+EXTERNAL CFUNCTION XLONG sqlite3_errmsg16 (lpsqlite3 _value)
+EXTERNAL CFUNCTION XLONG sqlite3_errstr (int _value)
+EXTERNAL CFUNCTION int sqlite3_exec (lpsqlite3, XLONG sql, XLONG callback, VOID, XLONG err)
+EXTERNAL CFUNCTION sqlite3_expanded_sql ()
+EXTERNAL CFUNCTION int sqlite3_expired (lpsqlite3_stmt _value)
+EXTERNAL CFUNCTION int sqlite3_extended_errcode (lpsqlite3 db)
+EXTERNAL CFUNCTION int sqlite3_extended_result_codes (lpsqlite3 _value, int onoff)
+EXTERNAL CFUNCTION int sqlite3_file_control (lpsqlite3 _value, XLONG zDbName, int op, XLONG op)
+EXTERNAL CFUNCTION int sqlite3_finalize (lpsqlite3_stmt pStmt)
+EXTERNAL CFUNCTION sqlite3_free (XLONG _value)
+EXTERNAL CFUNCTION sqlite3_free_table (XLONG result)
+EXTERNAL CFUNCTION sqlite3_fts5_may_be_corrupt ()
+EXTERNAL CFUNCTION int sqlite3_get_autocommit (lpsqlite3 _value)
+EXTERNAL CFUNCTION XLONG sqlite3_get_auxdata (lpsqlite3_context _value, int N)
+EXTERNAL CFUNCTION int sqlite3_get_table (lpsqlite3 db, XLONG zSql, XLONG pazResult, XLONG pnRow, XLONG pnColumn, XLONG pzErrmsg)
+EXTERNAL CFUNCTION int sqlite3_global_recover ( _value)
+EXTERNAL CFUNCTION int sqlite3_initialize ( _value)
+EXTERNAL CFUNCTION sqlite3_interrupt (lpsqlite3 _value)
+EXTERNAL CFUNCTION sqlite3_int64 sqlite3_last_insert_rowid (lpsqlite3 _value)
+EXTERNAL CFUNCTION XLONG sqlite3_libversion ()
+EXTERNAL CFUNCTION int sqlite3_libversion_number ()
+EXTERNAL CFUNCTION int sqlite3_limit (lpsqlite3 _value, int id, int newVal)
+EXTERNAL CFUNCTION int sqlite3_load_extension (lpsqlite3 db, XLONG zFile, XLONG zProc, XLONG pzErrMsg)
+EXTERNAL CFUNCTION sqlite3_log (int iErrCode, XLONG zFormat, XLONG value)
+EXTERNAL CFUNCTION XLONG sqlite3_malloc (int _value)
+EXTERNAL CFUNCTION sqlite3_malloc64 ()
+EXTERNAL CFUNCTION int sqlite3_memory_alarm (XLONG _value)
+EXTERNAL CFUNCTION sqlite3_int64 sqlite3_memory_highwater (int resetFlag)
+EXTERNAL CFUNCTION sqlite3_int64 sqlite3_memory_used ( _value)
+EXTERNAL CFUNCTION XLONG sqlite3_mprintf (XLONG _value, XLONG value)
+EXTERNAL CFUNCTION sqlite3_msize ()
+EXTERNAL CFUNCTION lpsqlite3_mutex sqlite3_mutex_alloc (int _value)
+EXTERNAL CFUNCTION sqlite3_mutex_enter (lpsqlite3_mutex _value)
+EXTERNAL CFUNCTION sqlite3_mutex_free (lpsqlite3_mutex _value)
+EXTERNAL CFUNCTION sqlite3_mutex_leave (lpsqlite3_mutex _value)
+EXTERNAL CFUNCTION int sqlite3_mutex_try (lpsqlite3_mutex _value)
+EXTERNAL CFUNCTION lpsqlite3_stmt sqlite3_next_stmt (lpsqlite3 pDb, lpsqlite3_stmt pStmt)
+EXTERNAL CFUNCTION int sqlite3_open (XLONG filename, lpsqlite3 ppDb)
+EXTERNAL CFUNCTION int sqlite3_open16 (XLONG filename, lpsqlite3 ppDb)
+EXTERNAL CFUNCTION int sqlite3_open_v2 (XLONG filename, lpsqlite3 ppDb, int flags, XLONG zVfs)
+EXTERNAL CFUNCTION int sqlite3_os_end ( _value)
+EXTERNAL CFUNCTION int sqlite3_os_init ( _value)
+EXTERNAL CFUNCTION int sqlite3_overload_function (lpsqlite3 _value, XLONG zFuncName, int nArg)
+EXTERNAL CFUNCTION int sqlite3_prepare (lpsqlite3 db, XLONG zSql, int nByte, lpsqlite3_stmt ppStmt, XLONG pzTail)
+EXTERNAL CFUNCTION int sqlite3_prepare16 (lpsqlite3 db, XLONG zSql, int nByte, lpsqlite3_stmt ppStmt, XLONG pzTail)
+EXTERNAL CFUNCTION int sqlite3_prepare16_v2 (lpsqlite3 db, XLONG zSql, int nByte, lpsqlite3_stmt ppStmt, XLONG pzTail)
+EXTERNAL CFUNCTION int sqlite3_prepare_v2 (lpsqlite3 db, XLONG zSql, int nByte, lpsqlite3_stmt ppStmt, XLONG pzTail)
+EXTERNAL CFUNCTION XLONG sqlite3_profile (lpsqlite3 _value, lpvoidxProfile _value)
+EXTERNAL CFUNCTION sqlite3_progress_handler (lpsqlite3 _value, int _value, XLONG _value)
+EXTERNAL CFUNCTION sqlite3_randomness (int N, XLONG P)
+EXTERNAL CFUNCTION XLONG sqlite3_realloc (XLONG _value, int _value)
+EXTERNAL CFUNCTION sqlite3_realloc64 ()
+EXTERNAL CFUNCTION int sqlite3_release_memory (int _value)
+EXTERNAL CFUNCTION int sqlite3_reset (lpsqlite3_stmt pStmt)
+EXTERNAL CFUNCTION sqlite3_reset_auto_extension ( _value)
+EXTERNAL CFUNCTION sqlite3_result_blob (lpsqlite3_context _value, XLONG _value, int _value, XLONG _value)
+EXTERNAL CFUNCTION sqlite3_result_blob64 ()
+EXTERNAL CFUNCTION sqlite3_result_double (lpsqlite3_context _value, double _value)
+EXTERNAL CFUNCTION sqlite3_result_error (lpsqlite3_context _value, XLONG _value, int _value)
+EXTERNAL CFUNCTION sqlite3_result_error16 (lpsqlite3_context _value, XLONG _value, int _value)
+EXTERNAL CFUNCTION sqlite3_result_error_code (lpsqlite3_context _value, int _value)
+EXTERNAL CFUNCTION sqlite3_result_error_nomem (lpsqlite3_context _value)
+EXTERNAL CFUNCTION sqlite3_result_error_toobig (lpsqlite3_context _value)
+EXTERNAL CFUNCTION sqlite3_result_int (lpsqlite3_context _value, int _value)
+EXTERNAL CFUNCTION sqlite3_result_int64 (lpsqlite3_context _value, sqlite3_int64 _value)
+EXTERNAL CFUNCTION sqlite3_result_null (lpsqlite3_context _value)
+EXTERNAL CFUNCTION sqlite3_result_subtype ()
+EXTERNAL CFUNCTION sqlite3_result_text (lpsqlite3_context _value, XLONG _value, int _value, XLONG _value)
+EXTERNAL CFUNCTION sqlite3_result_text16 (lpsqlite3_context _value, XLONG _value, int _value, XLONG _value)
+EXTERNAL CFUNCTION sqlite3_result_text16be (lpsqlite3_context _value, XLONG _value, int _value, XLONG _value)
+EXTERNAL CFUNCTION sqlite3_result_text16le (lpsqlite3_context _value, XLONG _value, int _value, XLONG _value)
+EXTERNAL CFUNCTION sqlite3_result_text64 ()
+EXTERNAL CFUNCTION sqlite3_result_value (lpsqlite3_context _value, lpsqlite3_value _value)
+EXTERNAL CFUNCTION sqlite3_result_zeroblob (lpsqlite3_context _value, int n)
+EXTERNAL CFUNCTION sqlite3_result_zeroblob64 ()
+EXTERNAL CFUNCTION XLONG sqlite3_rollback_hook (lpsqlite3 _value, XLONG _value)
+EXTERNAL CFUNCTION int sqlite3_rtree_geometry_callback (lpsqlite3 db, XLONG zGeom, XLONG xGeom)
+EXTERNAL CFUNCTION sqlite3_rtree_query_callback ()
+EXTERNAL CFUNCTION int sqlite3_set_authorizer (lpsqlite3 _value, XLONG xAuth)
+EXTERNAL CFUNCTION sqlite3_set_auxdata (lpsqlite3_context _value, int N, XLONG N, XLONG N)
+EXTERNAL CFUNCTION int sqlite3_shutdown ( _value)
+EXTERNAL CFUNCTION int sqlite3_sleep (int _value)
+EXTERNAL CFUNCTION XLONG sqlite3_snprintf (int _value, XLONG _value, XLONG _value, XLONG value)
+EXTERNAL CFUNCTION sqlite3_soft_heap_limit (int N)
+EXTERNAL CFUNCTION sqlite3_int64 sqlite3_soft_heap_limit64 (sqlite3_int64 N)
+EXTERNAL CFUNCTION XLONG sqlite3_sourceid ()
+EXTERNAL CFUNCTION XLONG sqlite3_sql (lpsqlite3_stmt pStmt)
+EXTERNAL CFUNCTION int sqlite3_status (int op, XLONG pCurrent, XLONG pHighwater, int resetFlag)
+EXTERNAL CFUNCTION sqlite3_status64 ()
+EXTERNAL CFUNCTION int sqlite3_step (lpsqlite3_stmt _value)
+EXTERNAL CFUNCTION int sqlite3_stmt_busy (lpsqlite3_stmt _value)
+EXTERNAL CFUNCTION int sqlite3_stmt_readonly (lpsqlite3_stmt pStmt)
+EXTERNAL CFUNCTION int sqlite3_stmt_status (lpsqlite3_stmt _value, int op, int resetFlg)
+EXTERNAL CFUNCTION int sqlite3_strglob (XLONG zGlob, XLONG zStr)
+EXTERNAL CFUNCTION int sqlite3_stricmp (XLONG _value, XLONG _value)
+EXTERNAL CFUNCTION sqlite3_strlike ()
+EXTERNAL CFUNCTION int sqlite3_strnicmp (XLONG _value, XLONG _value, int _value)
+EXTERNAL CFUNCTION sqlite3_system_errno ()
+EXTERNAL CFUNCTION int sqlite3_table_column_metadata (lpsqlite3 db, XLONG zDbName, XLONG zTableName, XLONG zColumnName, XLONG pzDataType, XLONG pzCollSeq, XLONG pNotNull, XLONG pPrimaryKey, XLONG pAutoinc)
+EXTERNAL CFUNCTION sqlite3_temp_directory ()
+EXTERNAL CFUNCTION int sqlite3_test_control (int op, XLONG value)
+EXTERNAL CFUNCTION sqlite3_thread_cleanup ( _value)
+EXTERNAL CFUNCTION int sqlite3_threadsafe ()
+EXTERNAL CFUNCTION int sqlite3_total_changes (lpsqlite3 _value)
+EXTERNAL CFUNCTION XLONG sqlite3_trace (lpsqlite3 _value, lpvoidxTrace _value)
+EXTERNAL CFUNCTION sqlite3_trace_v2 ()
+EXTERNAL CFUNCTION int sqlite3_transfer_bindings (lpsqlite3_stmt _value, lpsqlite3_stmt _value)
+EXTERNAL CFUNCTION XLONG sqlite3_update_hook (lpsqlite3 _value, XLONG _value)
+EXTERNAL CFUNCTION int sqlite3_uri_boolean (XLONG zFile, XLONG zParam, int bDefault)
+EXTERNAL CFUNCTION sqlite3_int64 sqlite3_uri_int64 (XLONG _value, XLONG _value, sqlite3_int64 _value)
+EXTERNAL CFUNCTION XLONG sqlite3_uri_parameter (XLONG zFilename, XLONG zParam)
+EXTERNAL CFUNCTION XLONG sqlite3_user_data (lpsqlite3_context _value)
+EXTERNAL CFUNCTION XLONG sqlite3_value_blob (lpsqlite3_value _value)
+EXTERNAL CFUNCTION int sqlite3_value_bytes (lpsqlite3_value _value)
+EXTERNAL CFUNCTION int sqlite3_value_bytes16 (lpsqlite3_value _value)
+EXTERNAL CFUNCTION double sqlite3_value_double (lpsqlite3_value _value)
+EXTERNAL CFUNCTION sqlite3_value_dup ()
+EXTERNAL CFUNCTION sqlite3_value_free ()
+EXTERNAL CFUNCTION int sqlite3_value_int (lpsqlite3_value _value)
+EXTERNAL CFUNCTION sqlite3_int64 sqlite3_value_int64 (lpsqlite3_value _value)
+EXTERNAL CFUNCTION int sqlite3_value_numeric_type (lpsqlite3_value _value)
+EXTERNAL CFUNCTION sqlite3_value_subtype ()
+EXTERNAL CFUNCTION unsigned sqlite3_value_text (lpsqlite3_value _value)
+EXTERNAL CFUNCTION XLONG sqlite3_value_text16 (lpsqlite3_value _value)
+EXTERNAL CFUNCTION XLONG sqlite3_value_text16be (lpsqlite3_value _value)
+EXTERNAL CFUNCTION XLONG sqlite3_value_text16le (lpsqlite3_value _value)
+EXTERNAL CFUNCTION int sqlite3_value_type (lpsqlite3_value _value)
+EXTERNAL CFUNCTION sqlite3_version ()
+EXTERNAL CFUNCTION lpsqlite3_vfs sqlite3_vfs_find (XLONG zVfsName)
+EXTERNAL CFUNCTION int sqlite3_vfs_register (lpsqlite3_vfs _value, int makeDflt)
+EXTERNAL CFUNCTION int sqlite3_vfs_unregister (lpsqlite3_vfs _value)
+EXTERNAL CFUNCTION XLONG sqlite3_vmprintf (XLONG _value, va_list _value)
+EXTERNAL CFUNCTION XLONG sqlite3_vsnprintf (int _value, XLONG _value, XLONG _value, va_list _value)
+EXTERNAL CFUNCTION int sqlite3_vtab_config (lpsqlite3 _value, int op, XLONG value)
+EXTERNAL CFUNCTION int sqlite3_vtab_on_conflict (lpsqlite3 _value)
+EXTERNAL CFUNCTION int sqlite3_wal_autocheckpoint (lpsqlite3 db, int N)
+EXTERNAL CFUNCTION int sqlite3_wal_checkpoint (lpsqlite3 db, XLONG zDb)
+EXTERNAL CFUNCTION int sqlite3_wal_checkpoint_v2 (lpsqlite3 db, XLONG zDb, int eMode, XLONG pnLog, XLONG pnCkpt)
+EXTERNAL CFUNCTION XLONG sqlite3_wal_hook (lpsqlite3 _value, XLONG _value)
+EXTERNAL CFUNCTION sqlite3_win32_is_nt ()
+EXTERNAL CFUNCTION sqlite3_win32_mbcs_to_utf8 ()
+EXTERNAL CFUNCTION sqlite3_win32_mbcs_to_utf8_v2 ()
+EXTERNAL CFUNCTION sqlite3_win32_set_directory ()
+EXTERNAL CFUNCTION sqlite3_win32_sleep ()
+EXTERNAL CFUNCTION sqlite3_win32_unicode_to_utf8 ()
+EXTERNAL CFUNCTION sqlite3_win32_utf8_to_mbcs ()
+EXTERNAL CFUNCTION sqlite3_win32_utf8_to_mbcs_v2 ()
+EXTERNAL CFUNCTION sqlite3_win32_utf8_to_unicode ()
+EXTERNAL CFUNCTION sqlite3_win32_write_debug ()
+
+$$SQLITE_VERSION_NUMBER = 3008002
+$$SQLITE_OK = 0
+$$SQLITE_ERROR = 1
+$$SQLITE_INTERNAL = 2
+$$SQLITE_PERM = 3
+$$SQLITE_ABORT = 4
+$$SQLITE_BUSY = 5
+$$SQLITE_LOCKED = 6
+$$SQLITE_NOMEM = 7
+$$SQLITE_READONLY = 8
+$$SQLITE_INTERRUPT = 9
+$$SQLITE_IOERR = 10
+$$SQLITE_CORRUPT = 11
+$$SQLITE_NOTFOUND = 12
+$$SQLITE_FULL = 13
+$$SQLITE_CANTOPEN = 14
+$$SQLITE_PROTOCOL = 15
+$$SQLITE_EMPTY = 16
+$$SQLITE_SCHEMA = 17
+$$SQLITE_TOOBIG = 18
+$$SQLITE_CONSTRAINT = 19
+$$SQLITE_MISMATCH = 20
+$$SQLITE_MISUSE = 21
+$$SQLITE_NOLFS = 22
+$$SQLITE_AUTH = 23
+$$SQLITE_FORMAT = 24
+$$SQLITE_RANGE = 25
+$$SQLITE_NOTADB = 26
+$$SQLITE_NOTICE = 27
+$$SQLITE_WARNING = 28
+$$SQLITE_ROW = 100
+$$SQLITE_DONE = 101
+$$SQLITE_OPEN_READONLY = 0x00000001
+$$SQLITE_OPEN_READWRITE = 0x00000002
+$$SQLITE_OPEN_CREATE = 0x00000004
+$$SQLITE_OPEN_DELETEONCLOSE = 0x00000008
+$$SQLITE_OPEN_EXCLUSIVE = 0x00000010
+$$SQLITE_OPEN_AUTOPROXY = 0x00000020
+$$SQLITE_OPEN_URI = 0x00000040
+$$SQLITE_OPEN_MEMORY = 0x00000080
+$$SQLITE_OPEN_MAIN_DB = 0x00000100
+$$SQLITE_OPEN_TEMP_DB = 0x00000200
+$$SQLITE_OPEN_TRANSIENT_DB = 0x00000400
+$$SQLITE_OPEN_MAIN_JOURNAL = 0x00000800
+$$SQLITE_OPEN_TEMP_JOURNAL = 0x00001000
+$$SQLITE_OPEN_SUBJOURNAL = 0x00002000
+$$SQLITE_OPEN_MASTER_JOURNAL = 0x00004000
+$$SQLITE_OPEN_NOMUTEX = 0x00008000
+$$SQLITE_OPEN_FULLMUTEX = 0x00010000
+$$SQLITE_OPEN_SHAREDCACHE = 0x00020000
+$$SQLITE_OPEN_PRIVATECACHE = 0x00040000
+$$SQLITE_OPEN_WAL = 0x00080000
+$$SQLITE_IOCAP_ATOMIC = 0x00000001
+$$SQLITE_IOCAP_ATOMIC512 = 0x00000002
+$$SQLITE_IOCAP_ATOMIC1K = 0x00000004
+$$SQLITE_IOCAP_ATOMIC2K = 0x00000008
+$$SQLITE_IOCAP_ATOMIC4K = 0x00000010
+$$SQLITE_IOCAP_ATOMIC8K = 0x00000020
+$$SQLITE_IOCAP_ATOMIC16K = 0x00000040
+$$SQLITE_IOCAP_ATOMIC32K = 0x00000080
+$$SQLITE_IOCAP_ATOMIC64K = 0x00000100
+$$SQLITE_IOCAP_SAFE_APPEND = 0x00000200
+$$SQLITE_IOCAP_SEQUENTIAL = 0x00000400
+$$SQLITE_IOCAP_UNDELETABLE_WHEN_OPEN = 0x00000800
+$$SQLITE_IOCAP_POWERSAFE_OVERWRITE = 0x00001000
+$$SQLITE_LOCK_NONE = 0
+$$SQLITE_LOCK_SHARED = 1
+$$SQLITE_LOCK_RESERVED = 2
+$$SQLITE_LOCK_PENDING = 3
+$$SQLITE_LOCK_EXCLUSIVE = 4
+$$SQLITE_SYNC_NORMAL = 0x00002
+$$SQLITE_SYNC_FULL = 0x00003
+$$SQLITE_SYNC_DATAONLY = 0x00010
+$$SQLITE_FCNTL_LOCKSTATE = 1
+$$SQLITE_GET_LOCKPROXYFILE = 2
+$$SQLITE_SET_LOCKPROXYFILE = 3
+$$SQLITE_LAST_ERRNO = 4
+$$SQLITE_FCNTL_SIZE_HINT = 5
+$$SQLITE_FCNTL_CHUNK_SIZE = 6
+$$SQLITE_FCNTL_FILE_POINTER = 7
+$$SQLITE_FCNTL_SYNC_OMITTED = 8
+$$SQLITE_FCNTL_WIN32_AV_RETRY = 9
+$$SQLITE_FCNTL_PERSIST_WAL = 10
+$$SQLITE_FCNTL_OVERWRITE = 11
+$$SQLITE_FCNTL_VFSNAME = 12
+$$SQLITE_FCNTL_POWERSAFE_OVERWRITE = 13
+$$SQLITE_FCNTL_PRAGMA = 14
+$$SQLITE_FCNTL_BUSYHANDLER = 15
+$$SQLITE_FCNTL_TEMPFILENAME = 16
+$$SQLITE_FCNTL_MMAP_SIZE = 18
+$$SQLITE_FCNTL_TRACE = 19
+$$SQLITE_ACCESS_EXISTS = 0
+$$SQLITE_ACCESS_READWRITE = 1
+$$SQLITE_ACCESS_READ = 2
+$$SQLITE_SHM_UNLOCK = 1
+$$SQLITE_SHM_LOCK = 2
+$$SQLITE_SHM_SHARED = 4
+$$SQLITE_SHM_EXCLUSIVE = 8
+$$SQLITE_SHM_NLOCK = 8
+$$SQLITE_CONFIG_SINGLETHREAD = 1
+$$SQLITE_CONFIG_MULTITHREAD = 2
+$$SQLITE_CONFIG_SERIALIZED = 3
+$$SQLITE_CONFIG_MALLOC = 4
+$$SQLITE_CONFIG_GETMALLOC = 5
+$$SQLITE_CONFIG_SCRATCH = 6
+$$SQLITE_CONFIG_PAGECACHE = 7
+$$SQLITE_CONFIG_HEAP = 8
+$$SQLITE_CONFIG_MEMSTATUS = 9
+$$SQLITE_CONFIG_MUTEX = 10
+$$SQLITE_CONFIG_GETMUTEX = 11
+$$SQLITE_CONFIG_LOOKASIDE = 13
+$$SQLITE_CONFIG_PCACHE = 14
+$$SQLITE_CONFIG_GETPCACHE = 15
+$$SQLITE_CONFIG_LOG = 16
+$$SQLITE_CONFIG_URI = 17
+$$SQLITE_CONFIG_PCACHE2 = 18
+$$SQLITE_CONFIG_GETPCACHE2 = 19
+$$SQLITE_CONFIG_COVERING_INDEX_SCAN = 20
+$$SQLITE_CONFIG_SQLLOG = 21
+$$SQLITE_CONFIG_MMAP_SIZE = 22
+$$SQLITE_CONFIG_WIN32_HEAPSIZE = 23
+$$SQLITE_DBCONFIG_LOOKASIDE = 1001
+$$SQLITE_DBCONFIG_ENABLE_FKEY = 1002
+$$SQLITE_DBCONFIG_ENABLE_TRIGGER = 1003
+$$SQLITE_DENY = 1
+$$SQLITE_IGNORE = 2
+$$SQLITE_CREATE_INDEX = 1
+$$SQLITE_CREATE_TABLE = 2
+$$SQLITE_CREATE_TEMP_INDEX = 3
+$$SQLITE_CREATE_TEMP_TABLE = 4
+$$SQLITE_CREATE_TEMP_TRIGGER = 5
+$$SQLITE_CREATE_TEMP_VIEW = 6
+$$SQLITE_CREATE_TRIGGER = 7
+$$SQLITE_CREATE_VIEW = 8
+$$SQLITE_DELETE = 9
+$$SQLITE_DROP_INDEX = 10
+$$SQLITE_DROP_TABLE = 11
+$$SQLITE_DROP_TEMP_INDEX = 12
+$$SQLITE_DROP_TEMP_TABLE = 13
+$$SQLITE_DROP_TEMP_TRIGGER = 14
+$$SQLITE_DROP_TEMP_VIEW = 15
+$$SQLITE_DROP_TRIGGER = 16
+$$SQLITE_DROP_VIEW = 17
+$$SQLITE_INSERT = 18
+$$SQLITE_PRAGMA = 19
+$$SQLITE_READ = 20
+$$SQLITE_SELECT = 21
+$$SQLITE_TRANSACTION = 22
+$$SQLITE_UPDATE = 23
+$$SQLITE_ATTACH = 24
+$$SQLITE_DETACH = 25
+$$SQLITE_ALTER_TABLE = 26
+$$SQLITE_REINDEX = 27
+$$SQLITE_ANALYZE = 28
+$$SQLITE_CREATE_VTABLE = 29
+$$SQLITE_DROP_VTABLE = 30
+$$SQLITE_FUNCTION = 31
+$$SQLITE_SAVEPOINT = 32
+$$SQLITE_COPY = 0
+$$SQLITE_LIMIT_LENGTH = 0
+$$SQLITE_LIMIT_SQL_LENGTH = 1
+$$SQLITE_LIMIT_COLUMN = 2
+$$SQLITE_LIMIT_EXPR_DEPTH = 3
+$$SQLITE_LIMIT_COMPOUND_SELECT = 4
+$$SQLITE_LIMIT_VDBE_OP = 5
+$$SQLITE_LIMIT_FUNCTION_ARG = 6
+$$SQLITE_LIMIT_ATTACHED = 7
+$$SQLITE_LIMIT_LIKE_PATTERN_LENGTH = 8
+$$SQLITE_LIMIT_VARIABLE_NUMBER = 9
+$$SQLITE_LIMIT_TRIGGER_DEPTH = 10
+$$SQLITE_INTEGER = 1
+$$SQLITE_FLOAT = 2
+$$SQLITE_BLOB = 4
+$$SQLITE_NULL = 5
+$$SQLITE3_TEXT = 3
+$$SQLITE_UTF8 = 1
+$$SQLITE_UTF16LE = 2
+$$SQLITE_UTF16BE = 3
+$$SQLITE_UTF16 = 4
+$$SQLITE_ANY = 5
+$$SQLITE_UTF16_ALIGNED = 8
+$$SQLITE_INDEX_CONSTRAINT_EQ = 2
+$$SQLITE_INDEX_CONSTRAINT_GT = 4
+$$SQLITE_INDEX_CONSTRAINT_LE = 8
+$$SQLITE_INDEX_CONSTRAINT_LT = 16
+$$SQLITE_INDEX_CONSTRAINT_GE = 32
+$$SQLITE_INDEX_CONSTRAINT_MATCH = 64
+$$SQLITE_MUTEX_FAST = 0
+$$SQLITE_MUTEX_RECURSIVE = 1
+$$SQLITE_MUTEX_STATIC_MASTER = 2
+$$SQLITE_MUTEX_STATIC_MEM = 3
+$$SQLITE_MUTEX_STATIC_MEM2 = 4
+$$SQLITE_MUTEX_STATIC_OPEN = 4
+$$SQLITE_MUTEX_STATIC_PRNG = 5
+$$SQLITE_MUTEX_STATIC_LRU = 6
+$$SQLITE_MUTEX_STATIC_LRU2 = 7
+$$SQLITE_MUTEX_STATIC_PMEM = 7
+$$SQLITE_TESTCTRL_FIRST = 5
+$$SQLITE_TESTCTRL_PRNG_SAVE = 5
+$$SQLITE_TESTCTRL_PRNG_RESTORE = 6
+$$SQLITE_TESTCTRL_PRNG_RESET = 7
+$$SQLITE_TESTCTRL_BITVEC_TEST = 8
+$$SQLITE_TESTCTRL_FAULT_INSTALL = 9
+$$SQLITE_TESTCTRL_BENIGN_MALLOC_HOOKS = 10
+$$SQLITE_TESTCTRL_PENDING_BYTE = 11
+$$SQLITE_TESTCTRL_ASSERT = 12
+$$SQLITE_TESTCTRL_ALWAYS = 13
+$$SQLITE_TESTCTRL_RESERVE = 14
+$$SQLITE_TESTCTRL_OPTIMIZATIONS = 15
+$$SQLITE_TESTCTRL_ISKEYWORD = 16
+$$SQLITE_TESTCTRL_SCRATCHMALLOC = 17
+$$SQLITE_TESTCTRL_LOCALTIME_FAULT = 18
+$$SQLITE_TESTCTRL_EXPLAIN_STMT = 19
+$$SQLITE_TESTCTRL_NEVER_CORRUPT = 20
+$$SQLITE_TESTCTRL_LAST = 20
+$$SQLITE_STATUS_MEMORY_USED = 0
+$$SQLITE_STATUS_PAGECACHE_USED = 1
+$$SQLITE_STATUS_PAGECACHE_OVERFLOW = 2
+$$SQLITE_STATUS_SCRATCH_USED = 3
+$$SQLITE_STATUS_SCRATCH_OVERFLOW = 4
+$$SQLITE_STATUS_MALLOC_SIZE = 5
+$$SQLITE_STATUS_PARSER_STACK = 6
+$$SQLITE_STATUS_PAGECACHE_SIZE = 7
+$$SQLITE_STATUS_SCRATCH_SIZE = 8
+$$SQLITE_STATUS_MALLOC_COUNT = 9
+$$SQLITE_DBSTATUS_LOOKASIDE_USED = 0
+$$SQLITE_DBSTATUS_CACHE_USED = 1
+$$SQLITE_DBSTATUS_SCHEMA_USED = 2
+$$SQLITE_DBSTATUS_STMT_USED = 3
+$$SQLITE_DBSTATUS_LOOKASIDE_HIT = 4
+$$SQLITE_DBSTATUS_LOOKASIDE_MISS_SIZE = 5
+$$SQLITE_DBSTATUS_LOOKASIDE_MISS_FULL = 6
+$$SQLITE_DBSTATUS_CACHE_HIT = 7
+$$SQLITE_DBSTATUS_CACHE_MISS = 8
+$$SQLITE_DBSTATUS_CACHE_WRITE = 9
+$$SQLITE_DBSTATUS_DEFERRED_FKS = 10
+$$SQLITE_DBSTATUS_MAX = 10
+$$SQLITE_STMTSTATUS_FULLSCAN_STEP = 1
+$$SQLITE_STMTSTATUS_SORT = 2
+$$SQLITE_STMTSTATUS_AUTOINDEX = 3
+$$SQLITE_STMTSTATUS_VM_STEP = 4
+$$SQLITE_CHECKPOINT_PASSIVE = 0
+$$SQLITE_CHECKPOINT_FULL = 1
+$$SQLITE_CHECKPOINT_RESTART = 2
+$$SQLITE_VTAB_CONSTRAINT_SUPPORT = 1
+$$SQLITE_ROLLBACK = 1
+$$SQLITE_FAIL = 3
+$$SQLITE_REPLACE = 5
